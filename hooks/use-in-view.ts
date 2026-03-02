@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
-export function useInView(threshold = 0.15) {
+export function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
 
@@ -17,7 +17,7 @@ export function useInView(threshold = 0.15) {
           observer.unobserve(el);
         }
       },
-      { threshold }
+      { threshold, rootMargin: "0px 0px -60px 0px" }
     );
 
     observer.observe(el);
@@ -25,4 +25,22 @@ export function useInView(threshold = 0.15) {
   }, [threshold]);
 
   return { ref, inView };
+}
+
+export function useMouseGlow() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const cards = el.querySelectorAll<HTMLElement>(".tactical-card");
+    cards.forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+      card.style.setProperty("--mouse-x", `${e.clientX - cardRect.left}px`);
+      card.style.setProperty("--mouse-y", `${e.clientY - cardRect.top}px`);
+    });
+  }, []);
+
+  return { ref, handleMouseMove };
 }

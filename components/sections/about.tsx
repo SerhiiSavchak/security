@@ -1,85 +1,83 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
-import { Clock, ShieldCheck, Building } from "lucide-react";
 import type { Dictionary } from "@/lib/get-dictionary";
 
 export function About({ dict }: { dict: Dictionary }) {
   const { ref, inView } = useInView();
 
   const stats = [
-    {
-      value: dict.about.stats.years,
-      label: dict.about.stats.yearsLabel,
-      icon: Clock,
-    },
-    {
-      value: dict.about.stats.response,
-      label: dict.about.stats.responseLabel,
-      icon: ShieldCheck,
-    },
-    {
-      value: dict.about.stats.objects,
-      label: dict.about.stats.objectsLabel,
-      icon: Building,
-    },
+    { value: dict.about.stats.years, label: dict.about.stats.yearsLabel },
+    { value: dict.about.stats.response, label: dict.about.stats.responseLabel },
+    { value: dict.about.stats.objects, label: dict.about.stats.objectsLabel },
   ];
 
   return (
-    <section id="about" className="relative py-24 lg:py-32" ref={ref}>
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        {/* Badge */}
+    <section id="about" className="relative py-32 lg:py-44" ref={ref}>
+      {/* Background accent */}
+      <div
+        className="absolute left-0 top-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full opacity-[0.03] blur-3xl"
+        style={{ background: "hsl(var(--glow))" }}
+      />
+
+      <div className="relative mx-auto max-w-[1400px] px-5 lg:px-10">
+        {/* Section label */}
         <div
-          className={`mb-4 flex items-center gap-2 transition-all duration-700 ${
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          className={`mb-6 flex items-center gap-4 transition-all duration-800 ${
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="h-px w-8 bg-primary" />
-          <span className="font-mono text-xs uppercase tracking-widest text-primary">
+          <div className="h-px w-12 bg-primary/50" />
+          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary">
             {dict.about.badge}
           </span>
         </div>
 
-        <div className="flex flex-col gap-16 lg:flex-row lg:items-start lg:gap-20">
-          {/* Left: text */}
-          <div className="flex-1">
+        {/* Split layout */}
+        <div className="flex flex-col gap-16 lg:flex-row lg:items-start lg:gap-24">
+          {/* Left: text block */}
+          <div className="lg:flex-1 lg:max-w-xl">
             <h2
-              className={`mb-6 text-3xl font-bold tracking-tight text-foreground sm:text-4xl transition-all duration-700 delay-100 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`mb-8 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl transition-all duration-800 delay-100 ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {dict.about.title}
             </h2>
             <p
-              className={`max-w-xl text-base leading-relaxed text-muted-foreground transition-all duration-700 delay-200 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`text-lg leading-relaxed text-muted-foreground transition-all duration-800 delay-200 ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
               {dict.about.description}
             </p>
           </div>
 
-          {/* Right: stats */}
-          <div className="flex flex-col gap-6 sm:flex-row lg:flex-col lg:gap-8">
+          {/* Right: dramatic stat blocks */}
+          <div className="flex flex-col gap-4 lg:w-[380px]">
             {stats.map((stat, i) => (
               <div
                 key={stat.label}
-                className={`tactical-card flex items-center gap-5 rounded-lg border border-border bg-card/50 p-6 backdrop-blur-sm transition-all duration-700 ${
-                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                className={`tactical-card glass-panel glow-border rounded-xl px-7 py-6 transition-all duration-800 ${
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
                 style={{ transitionDelay: `${300 + i * 150}ms` }}
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                  <stat.icon className="h-6 w-6 text-primary" />
+                <div
+                  className="text-4xl font-bold tracking-tight text-foreground lg:text-5xl"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {stat.value}
                 </div>
-                <div>
-                  <div className="font-mono text-2xl font-bold text-foreground">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {stat.label}
-                  </div>
+                <div className="mt-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  {stat.label}
                 </div>
+                {/* Decorative line */}
+                <div
+                  className="mt-4 h-px w-16"
+                  style={{ background: "linear-gradient(90deg, hsl(var(--primary)), transparent)" }}
+                />
               </div>
             ))}
           </div>

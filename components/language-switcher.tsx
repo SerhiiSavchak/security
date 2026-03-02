@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { locales, type Locale } from "@/lib/i18n";
-import { Globe } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 const labels: Record<Locale, string> = {
@@ -38,25 +37,28 @@ export function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-9 items-center gap-1.5 rounded-lg border border-border bg-secondary/50 px-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary hover:text-primary"
+        className="group flex h-9 items-center gap-2 rounded-lg border border-border bg-card/50 px-3 text-sm font-medium text-muted-foreground transition-all duration-300 hover:border-primary/30 hover:text-foreground"
         aria-label="Switch language"
       >
-        <Globe className="h-4 w-4" />
-        <span className="font-mono text-xs">{labels[currentLocale]}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-current">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+        <span className="font-mono text-[11px] tracking-wider">{labels[currentLocale]}</span>
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 overflow-hidden rounded-lg border border-border bg-card shadow-lg">
+        <div className="glass-panel-strong absolute right-0 top-full z-50 mt-2 min-w-[80px] overflow-hidden rounded-lg shadow-2xl">
           {locales.map((locale) => (
             <button
               key={locale}
               onClick={() => switchLocale(locale)}
-              className={`flex w-full items-center px-4 py-2 text-sm transition-colors hover:bg-secondary ${
+              className={`flex w-full items-center px-4 py-2.5 font-mono text-xs tracking-wider transition-colors hover:bg-primary/5 ${
                 locale === currentLocale
-                  ? "text-primary font-semibold"
-                  : "text-foreground"
+                  ? "text-primary font-bold"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              <span className="font-mono">{labels[locale]}</span>
+              {labels[locale]}
             </button>
           ))}
         </div>

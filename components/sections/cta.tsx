@@ -8,66 +8,95 @@ export function CTA({ dict }: { dict: Dictionary }) {
   const { ref, inView } = useInView();
 
   return (
-    <section className="relative py-24 lg:py-32" ref={ref}>
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-card/50 backdrop-blur-sm">
-          {/* Animated background pulse */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 animate-glow-pulse" />
+    <section className="relative py-32 lg:py-44" ref={ref}>
+      <div className="mx-auto max-w-[1400px] px-5 lg:px-10">
+        <div className="relative overflow-hidden rounded-2xl border border-border/50">
+          {/* Animated background */}
+          <div
+            className="absolute inset-0 animate-gradient-drift"
+            style={{
+              background: "linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--primary) / 0.05) 30%, hsl(var(--card)) 50%, hsl(var(--emerald) / 0.03) 70%, hsl(var(--card)) 100%)",
+              backgroundSize: "200% 200%",
+            }}
+          />
 
           {/* Grid overlay */}
-          <div className="grid-overlay absolute inset-0 opacity-50" />
+          <div className="grid-tactical absolute inset-0 opacity-40" />
 
-          <div className="relative flex flex-col items-center px-6 py-16 text-center sm:px-12 lg:py-24">
+          {/* Glow orbs */}
+          <div
+            className="absolute left-1/4 top-0 h-64 w-64 -translate-y-1/2 rounded-full opacity-[0.08] blur-3xl animate-float-slow"
+            style={{ background: "hsl(var(--glow))" }}
+          />
+          <div
+            className="absolute right-1/4 bottom-0 h-48 w-48 translate-y-1/2 rounded-full opacity-[0.06] blur-3xl animate-float-reverse"
+            style={{ background: "hsl(var(--emerald))" }}
+          />
+
+          {/* Scan line */}
+          <div
+            className="absolute left-0 right-0 h-px opacity-[0.08] animate-scan-line"
+            style={{ background: "linear-gradient(90deg, transparent, hsl(var(--glow)), transparent)" }}
+          />
+
+          <div className="relative flex flex-col items-center px-6 py-20 text-center sm:px-12 lg:py-28">
             <h2
-              className={`mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl transition-all duration-700 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl transition-all duration-800 ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               <span className="text-balance">{dict.cta.title}</span>
             </h2>
             <p
-              className={`mb-10 max-w-xl text-base text-muted-foreground transition-all duration-700 delay-100 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`mb-12 max-w-xl text-lg text-muted-foreground transition-all duration-800 delay-100 ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
               {dict.cta.subtitle}
             </p>
 
-            {/* Phone number */}
+            {/* Huge phone number */}
             <a
               href="tel:+380441234567"
-              className={`mb-8 font-mono text-2xl font-bold text-primary transition-all duration-700 delay-200 hover:underline sm:text-3xl lg:text-4xl ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`mb-12 text-3xl font-bold tracking-tight text-primary transition-all duration-800 delay-200 sm:text-4xl lg:text-5xl hover:text-foreground ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {dict.cta.phone}
             </a>
 
             {/* Buttons */}
             <div
-              className={`flex flex-col gap-4 sm:flex-row transition-all duration-700 delay-300 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`flex flex-col gap-4 sm:flex-row transition-all duration-800 delay-300 ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
               <a
                 href="tel:+380441234567"
-                className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-primary px-8 py-4 text-sm font-bold uppercase tracking-wider text-primary-foreground transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)]"
+                className="btn-primary flex items-center gap-3 rounded-lg px-10 py-4 text-sm"
               >
                 <Phone className="h-4 w-4" />
                 {dict.cta.call}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               </a>
               <a
                 href="https://t.me/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg border border-border bg-secondary/30 px-8 py-4 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-secondary/50"
+                className="btn-ghost flex items-center gap-3 rounded-lg px-10 py-4 text-sm"
               >
                 <Send className="h-4 w-4" />
                 {dict.cta.telegram}
               </a>
             </div>
           </div>
+
+          {/* Corner HUD marks */}
+          <div className="absolute left-4 top-4 h-6 w-6 border-l border-t border-primary/15" />
+          <div className="absolute right-4 top-4 h-6 w-6 border-r border-t border-primary/15" />
+          <div className="absolute bottom-4 left-4 h-6 w-6 border-b border-l border-primary/15" />
+          <div className="absolute bottom-4 right-4 h-6 w-6 border-r border-b border-primary/15" />
         </div>
       </div>
     </section>
