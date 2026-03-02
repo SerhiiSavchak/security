@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: 210 20% 96%;
+  --foreground: 215 25% 15%;
+  --card: 210 15% 92%;
+  --card-foreground: 215 25% 15%;
+  --primary: 210 60% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 15% 85%;
+  --secondary-foreground: 215 25% 20%;
+  --muted: 210 10% 90%;
+  --muted-foreground: 215 10% 45%;
+  --accent: 210 50% 50%;
+  --accent-foreground: 0 0% 100%;
+  --border: 210 15% 85%;
+  --ring: 210 60% 45%;
+  --radius: 0.5rem;
+  --tactical-green: 145 60% 45%;
+  --tactical-green-foreground: 0 0% 100%;
+  --glow-blue: 205 100% 55%;
+}
+
+.dark {
+  --background: 220 25% 6%;
+  --foreground: 210 20% 90%;
+  --card: 220 20% 10%;
+  --card-foreground: 210 20% 90%;
+  --primary: 205 100% 55%;
+  --primary-foreground: 220 25% 6%;
+  --secondary: 220 15% 15%;
+  --secondary-foreground: 210 20% 85%;
+  --muted: 220 15% 12%;
+  --muted-foreground: 210 10% 55%;
+  --accent: 205 90% 50%;
+  --accent-foreground: 220 25% 6%;
+  --border: 220 15% 18%;
+  --ring: 205 100% 55%;
+  --tactical-green: 145 70% 50%;
+  --tactical-green-foreground: 220 25% 6%;
+  --glow-blue: 205 100% 60%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-border: hsl(var(--border));
+  --color-ring: hsl(var(--ring));
+  --color-tactical-green: hsl(var(--tactical-green));
+  --color-tactical-green-foreground: hsl(var(--tactical-green-foreground));
+  --color-glow-blue: hsl(var(--glow-blue));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jet-brains);
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+}
+
+/* Radar sweep animation */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes radar-pulse {
+  0%, 100% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 0.6; transform: scale(1); }
+}
+
+@keyframes light-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes count-line {
+  0% { height: 0; }
+  100% { height: 100%; }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes grid-fade {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.08; }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: hsl(var(--border)); }
+  50% { border-color: hsl(var(--glow-blue) / 0.5); }
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 4s linear infinite;
+}
+
+.animate-radar-pulse {
+  animation: radar-pulse 3s ease-in-out infinite;
+}
+
+.animate-light-sweep {
+  animation: light-sweep 3s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-count-line {
+  animation: count-line 2s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-grid-fade {
+  animation: grid-fade 5s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow 3s ease-in-out infinite;
+}
+
+/* Grid overlay */
+.grid-overlay {
+  background-image:
+    linear-gradient(hsl(var(--glow-blue) / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--glow-blue) / 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Tactical card glow on hover */
+.tactical-card {
+  transition: all 0.3s ease;
+}
+
+.tactical-card:hover {
+  box-shadow: 0 0 30px hsl(var(--glow-blue) / 0.15),
+              inset 0 0 30px hsl(var(--glow-blue) / 0.05);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}

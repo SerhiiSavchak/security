@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "Security Agency | Professional Protection",
+    "description": "Reliable security and protection for your business and property. 24/7 monitoring, facility protection, cyber defense."
+  },
+  "header": {
+    "about": "About",
+    "services": "Services",
+    "why_us": "Why Us",
+    "process": "Process",
+    "reviews": "Reviews",
+    "call": "Call Us"
+  },
+  "hero": {
+    "badge": "DEFENSE SYSTEM ACTIVATED",
+    "title": "Absolute Control.",
+    "titleAccent": "Total Protection.",
+    "subtitle": "Next-generation professional security and defense. 24/7 monitoring, tactical response, and cyber protection of your assets.",
+    "cta": "Request Consultation",
+    "cta_secondary": "Learn More"
+  },
+  "about": {
+    "badge": "ABOUT US",
+    "title": "Experience You Can Trust",
+    "description": "We provide comprehensive protection for facilities of any complexity. Our team consists of experienced professionals with military and law enforcement backgrounds.",
+    "stats": {
+      "years": "10+",
+      "yearsLabel": "Years of Experience",
+      "response": "24/7",
+      "responseLabel": "Response Time",
+      "objects": "1000+",
+      "objectsLabel": "Secured Objects"
+    }
+  },
+  "services": {
+    "badge": "SERVICES",
+    "title": "Full Security Spectrum",
+    "items": [
+      {
+        "title": "Physical Security",
+        "description": "Professional armed and unarmed facility, event, and personal protection with 24/7 coverage."
+      },
+      {
+        "title": "Video Surveillance",
+        "description": "Installation and maintenance of CCTV systems with remote access and AI-powered analytics."
+      },
+      {
+        "title": "Panic Button",
+        "description": "Instant rapid response team deployment within 3-5 minutes anywhere in the city."
+      },
+      {
+        "title": "Cyber Defense",
+        "description": "Protection of information systems, network infrastructure, and personal data from cyber threats."
+      },
+      {
+        "title": "Alarm Monitoring",
+        "description": "24/7 facility monitoring through central observation station with automatic alerts."
+      },
+      {
+        "title": "Security Consulting",
+        "description": "Vulnerability audits, security strategy development, and staff training on protection protocols."
+      }
+    ]
+  },
+  "whyUs": {
+    "badge": "ADVANTAGES",
+    "title": "Why Choose Us",
+    "items": [
+      { "title": "Rapid Response", "description": "Response team arrives within 3-5 minutes" },
+      { "title": "Modern Equipment", "description": "We use the latest security technologies" },
+      { "title": "Licensed Operations", "description": "All necessary licenses and permits" },
+      { "title": "Expert Team", "description": "Specialists with military and police backgrounds" },
+      { "title": "Custom Approach", "description": "Personalized solutions for each client" },
+      { "title": "Transparent Reporting", "description": "Monthly reports and monitoring system access" }
+    ]
+  },
+  "process": {
+    "badge": "PROCESS",
+    "title": "How We Work",
+    "steps": [
+      { "title": "Analysis", "description": "We conduct a detailed facility audit to identify potential threats and vulnerabilities." },
+      { "title": "Planning", "description": "We develop an individual security strategy considering facility specifics." },
+      { "title": "Implementation", "description": "We install equipment, train personnel, and launch the security system." },
+      { "title": "Monitoring", "description": "We provide 24/7 control and rapid threat response." }
+    ]
+  },
+  "testimonials": {
+    "badge": "REVIEWS",
+    "title": "Trusted By Many",
+    "items": [
+      { "name": "Oleksandr K.", "role": "Logistics Company Director", "text": "After connecting the security system, incidents at warehouses decreased by 95%. The team responds instantly." },
+      { "name": "Maria T.", "role": "Shopping Center Owner", "text": "Professional approach and modern equipment. Three years of cooperation with zero major security breaches." },
+      { "name": "Dmytro V.", "role": "IT Company CEO", "text": "Top-level cyber defense. Regular audits and instant threat response. Highly recommended." }
+    ]
+  },
+  "cta": {
+    "title": "Ready to Secure Your Protection",
+    "subtitle": "Contact us for a free consultation and security audit of your facility.",
+    "phone": "+380 (44) 123-45-67",
+    "telegram": "Message on Telegram",
+    "call": "Call Us"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "license": "Licensed by MIA of Ukraine"
+  }
+}
