@@ -9,7 +9,7 @@ export function HeroVisual() {
         <div className="hero-visual-glow" />
         <div className="hero-visual-mask hero-visual-image-wrap">
           <Image
-            src="/images/hero-cctv.jpg"
+            src="/images/hero-cctv.png"
             alt=""
             width={640}
             height={480}

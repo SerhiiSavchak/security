@@ -1,37 +1,27 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
-import type { Dictionary } from "@/lib/get-dictionary";
+import { useLanguage } from "@/components/language-provider";
+import { Section, Container, SectionBadge, SectionHeading, revealClass } from "@/components/section";
+import { cn } from "@/lib/utils";
 
-export function Process({ dict }: { dict: Dictionary }) {
+export function Process() {
+  const { dict } = useLanguage();
   const { ref, inView } = useInView();
 
   return (
-    <section id="process" className="relative py-32 lg:py-44 overflow-hidden" ref={ref}>
+    <Section id="process" ref={ref}>
       {/* Subtle bg gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.01] to-transparent" />
 
-      <div className="relative mx-auto max-w-[1400px] px-5 lg:px-10">
-        {/* Badge */}
-        <div
-          className={`mb-6 flex items-center gap-4 transition-all duration-800 ${
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="h-px w-12 bg-primary/50" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary">
-            {dict.process.badge}
-          </span>
+      <Container className="relative">
+        <div className={cn("transition-all duration-800", revealClass(inView))}>
+          <SectionBadge>{dict.process.badge}</SectionBadge>
         </div>
 
-        <h2
-          className={`mb-20 text-4xl font-bold tracking-tight text-foreground sm:text-5xl transition-all duration-800 delay-100 ${
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <SectionHeading className={cn("mb-20 transition-all duration-800 delay-100", revealClass(inView))}>
           {dict.process.title}
-        </h2>
+        </SectionHeading>
 
         {/* Timeline */}
         <div className="relative">
@@ -51,9 +41,11 @@ export function Process({ dict }: { dict: Dictionary }) {
               return (
                 <div
                   key={step.title}
-                  className={`relative flex flex-col gap-6 md:flex-row md:items-center transition-all duration-800 ${
-                    inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                  } ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"}`}
+                  className={cn(
+                    "relative flex flex-col gap-6 md:flex-row md:items-center transition-all duration-800",
+                    revealClass(inView),
+                    isEven ? "lg:flex-row" : "lg:flex-row-reverse"
+                  )}
                   style={{ transitionDelay: `${300 + i * 200}ms` }}
                 >
                   {/* Number node */}
@@ -93,7 +85,7 @@ export function Process({ dict }: { dict: Dictionary }) {
             })}
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

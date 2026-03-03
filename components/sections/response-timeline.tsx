@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import type { Dictionary } from "@/lib/get-dictionary";
+import { useLanguage } from "@/components/language-provider";
+import { Section, Container, SectionBadge, SectionHeading } from "@/components/section";
 
 /* Animated SVG icons for each timeline step */
 function SignalIcon({ active }: { active: boolean }) {
@@ -51,7 +52,8 @@ function ArrivalIcon({ active }: { active: boolean }) {
   );
 }
 
-export function ResponseTimeline({ dict }: { dict: Dictionary }) {
+export function ResponseTimeline() {
+  const { dict } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
 
@@ -81,32 +83,23 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
   ];
 
   return (
-    <section ref={sectionRef} className="relative py-32 lg:py-44 overflow-hidden">
+    <Section ref={sectionRef} className="overflow-x-clip overflow-y-visible">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
       <div className="grid-tactical absolute inset-0 opacity-20" />
 
-      <div className="relative mx-auto w-full max-w-[900px] px-5 lg:px-10 overflow-x-hidden">
-        {/* Badge */}
-        <div className="mb-6 flex items-center gap-4">
-          <div className="h-px w-12 bg-primary/50" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary">
-            {dict.response?.badge ?? "RESPONSE PROTOCOL"}
-          </span>
-        </div>
+      <Container className="relative max-w-[900px] overflow-x-clip box-border">
+        <SectionBadge>{dict.response?.badge ?? "RESPONSE PROTOCOL"}</SectionBadge>
 
-        <h2
-          className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <SectionHeading className="mb-4 sm:mb-6 break-words text-2xl sm:text-4xl lg:text-5xl">
           {dict.response?.title ?? "Response Scenario in 60 Seconds"}
-        </h2>
-        <p className="mb-20 max-w-lg text-muted-foreground">
+        </SectionHeading>
+        <p className="mb-12 sm:mb-16 lg:mb-20 max-w-lg text-base sm:text-lg text-muted-foreground">
           {dict.response?.subtitle ?? "From signal to on-site response -- precision-timed protocol."}
         </p>
 
         {/* Timeline */}
-        <div className="relative flex justify-center">
+        <div className="relative flex w-full max-w-full justify-center overflow-x-clip">
           {/* Vertical glowing line */}
           <div className="absolute left-1/2 top-0 h-full w-px -translate-x-px bg-border/30">
             {/* Filled glow progress */}
@@ -131,7 +124,7 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
           </div>
 
           {/* Steps */}
-          <div className="flex flex-col gap-24 lg:gap-32">
+          <div className="flex w-full max-w-full min-w-0 flex-col gap-16 sm:gap-20 md:gap-24 lg:gap-32">
             {steps.map((step, i) => {
               const stepThreshold = (i + 0.5) / steps.length;
               const isActive = progress >= stepThreshold;
@@ -141,10 +134,10 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
               return (
                 <div
                   key={i}
-                  className={`relative flex items-start justify-center gap-6 md:gap-0 md:justify-start ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  className={`relative flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0 md:items-start md:justify-start min-w-0 ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
-                  {/* Content side */}
-                  <div className={`flex-1 min-w-0 text-center md:flex-none md:w-1/2 md:text-left ${isEven ? "md:pr-16 md:text-right" : "md:pl-16"}`}>
+                  {/* Content side - on mobile: below icon, centered */}
+                  <div className={`flex-1 min-w-0 w-full max-w-full text-center md:flex-none md:w-1/2 md:text-left ${isEven ? "md:pr-16 md:text-right" : "md:pl-16"}`}>
                     <div
                       className={`transition-all duration-700 ${
                         isActive
@@ -154,34 +147,34 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
                       style={{ transitionDelay: isActive ? "200ms" : "0ms" }}
                     >
                       {/* Time label */}
-                      <div className={`mb-3 flex items-center justify-center gap-3 md:justify-start ${isEven ? "md:justify-end" : ""}`}>
+                      <div className={`mb-2 sm:mb-3 flex items-center justify-center gap-3 md:justify-start ${isEven ? "md:justify-end" : ""}`}>
                         <span
-                          className={`font-mono text-2xl font-bold tracking-tight transition-colors duration-500 ${
+                          className={`font-mono text-xl sm:text-2xl font-bold tracking-tight transition-colors duration-500 ${
                             isActive ? "text-primary" : "text-muted-foreground/30"
                           }`}
                           style={{ fontFamily: "var(--font-display)" }}
                         >
                           {step.time}
                           {!step.time.includes("min") && (
-                            <span className="ml-1 text-sm font-normal text-muted-foreground/50">sec</span>
+                            <span className="ml-1 text-xs sm:text-sm font-normal text-muted-foreground/50">sec</span>
                           )}
                         </span>
                       </div>
-                      <p className={`text-lg transition-colors duration-500 ${isActive ? "text-foreground" : "text-muted-foreground/40"}`}>
+                      <p className={`text-base sm:text-lg transition-colors duration-500 break-words ${isActive ? "text-foreground" : "text-muted-foreground/40"}`}>
                         {step.label}
                       </p>
                     </div>
                   </div>
 
-                  {/* Center node */}
-                  <div className="absolute left-1/2 -translate-x-1/2 flex-shrink-0">
-                    <div
-                      className={`relative flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all duration-700 ${
-                        isActive
-                          ? "border-primary/60 bg-primary/10 shadow-[0_0_25px_hsl(var(--primary)/0.2)]"
-                          : "border-border/30 bg-card/50"
-                      }`}
-                    >
+                  {/* Center node - on mobile: above content */}
+                  <div className="flex-shrink-0 order-first md:order-none md:absolute md:left-1/2 md:-translate-x-1/2">
+                  <div
+                    className={`relative flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 transition-all duration-700 ${
+                      isActive
+                        ? "border-primary/60 bg-primary/10 shadow-[0_0_25px_hsl(var(--primary)/0.2)]"
+                        : "border-border/30 bg-card/50"
+                    }`}
+                  >
                       <IconComp active={isActive} />
                       {/* Pulse ring on activation */}
                       {isActive && (
@@ -199,7 +192,7 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
             })}
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

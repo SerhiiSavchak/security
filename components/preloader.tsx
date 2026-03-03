@@ -36,6 +36,7 @@ export function Preloader() {
       }`}
       style={{ background: "hsl(225, 30%, 3%)" }}
       aria-hidden="true"
+      data-lenis-prevent
     >
       {/* Background grid */}
       <div className="grid-tactical absolute inset-0 animate-grid-breathe" />

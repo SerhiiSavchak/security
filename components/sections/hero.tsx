@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Phone } from "lucide-react";
 import { HeroVisual } from "@/components/hero-visual";
-import type { Dictionary } from "@/lib/get-dictionary";
+import { useLanguage } from "@/components/language-provider";
+import { useLenis } from "@/components/lenis-provider";
 
-export function Hero({ dict }: { dict: Dictionary }) {
+export function Hero() {
+  const { dict } = useLanguage();
+  const lenis = useLenis();
   const [loaded, setLoaded] = useState(false);
+
+  const scrollToAbout = useCallback(() => {
+    lenis ? lenis.scrollTo("#about", { offset: -80 }) : document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+  }, [lenis]);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 2600);
@@ -14,17 +21,11 @@ export function Hero({ dict }: { dict: Dictionary }) {
   }, []);
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden">
+    <section className="relative flex min-h-screen items-center overflow-hidden hero-section">
       {/* === BACKGROUND LAYERS === */}
 
-      {/* Animated gradient background */}
-      <div
-        className="absolute inset-0 animate-gradient-drift"
-        style={{
-          background: "linear-gradient(135deg, hsl(var(--background)) 0%, hsl(225,30%,5%) 30%, hsl(225,25%,8%) 60%, hsl(var(--background)) 100%)",
-          backgroundSize: "200% 200%",
-        }}
-      />
+      {/* Animated gradient background - dark theme inline; light theme via CSS */}
+      <div className="hero-bg-gradient absolute inset-0 animate-gradient-drift" />
 
       {/* Grid overlay */}
       <div className="grid-tactical absolute inset-0 animate-grid-breathe" />
@@ -108,12 +109,12 @@ export function Hero({ dict }: { dict: Dictionary }) {
       />
 
       {/* === CONTENT === */}
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 pt-28 pb-20 lg:px-10 lg:pt-0 lg:pb-0">
+      <div className="hero-content relative z-10 mx-auto w-full max-w-7xl px-4 pt-28 pb-20 sm:px-6 lg:px-8 lg:pt-0 lg:pb-0">
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-20">
           {/* Left content */}
           <div className="flex-1 max-w-2xl">
             <div
-              className={`mb-11 inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-5 py-2.5 transition-all duration-1000 ${
+              className={`mb-11 inline-flex select-none items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-5 py-2.5 transition-all duration-1000 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
@@ -127,7 +128,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
             </div>
 
             <h1
-              className={`mb-8 text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight transition-all duration-1000 delay-200 ${
+              className={`hero-headline mb-8 text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[1.15] tracking-tight transition-all duration-1000 delay-200 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ fontFamily: "var(--font-display)" }}
@@ -137,7 +138,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
             </h1>
 
             <p
-              className={`mb-12 max-w-lg text-lg leading-relaxed text-muted-foreground transition-all duration-1000 delay-500 ${
+              className={`hero-subtitle mb-12 max-w-lg text-lg leading-relaxed text-muted-foreground transition-all duration-1000 delay-500 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               }`}
             >
@@ -157,7 +158,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
                 {dict.hero.cta}
               </a>
               <button
-                onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={scrollToAbout}
                 className="btn-ghost rounded-lg px-8 py-4 text-sm"
               >
                 {dict.hero.cta_secondary}
@@ -176,8 +177,8 @@ export function Hero({ dict }: { dict: Dictionary }) {
         </div>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none" style={{ background: "linear-gradient(to top, hsl(var(--background)), hsl(var(--background) / 0.7) 40%, transparent)" }} />
+      {/* Bottom gradient fade - dark theme inline; light theme via CSS */}
+      <div className="hero-bottom-fade absolute bottom-0 left-0 right-0 h-48 pointer-events-none" />
 
       {/* HUD corners */}
       <div className="absolute left-5 top-24 h-12 w-12 border-l border-t border-primary/10 hidden lg:block pointer-events-none" />

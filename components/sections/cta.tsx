@@ -2,14 +2,17 @@
 
 import { useInView } from "@/hooks/use-in-view";
 import { Phone, Send, MapPin } from "lucide-react";
-import type { Dictionary } from "@/lib/get-dictionary";
+import { useLanguage } from "@/components/language-provider";
+import { Section, Container, SectionHeading, revealClass } from "@/components/section";
+import { cn } from "@/lib/utils";
 
-export function CTA({ dict }: { dict: Dictionary }) {
+export function CTA() {
+  const { dict } = useLanguage();
   const { ref, inView } = useInView();
 
   return (
-    <section className="relative py-32 lg:py-44" ref={ref}>
-      <div className="mx-auto max-w-[1400px] px-5 lg:px-10">
+    <Section ref={ref}>
+      <Container>
         {/* CTA Panel */}
         <div className="relative overflow-hidden rounded-2xl border border-border/50">
           {/* Animated background */}
@@ -41,39 +44,25 @@ export function CTA({ dict }: { dict: Dictionary }) {
           />
 
           <div className="relative flex flex-col items-center px-6 py-20 text-center sm:px-12 lg:py-28">
-            <h2
-              className={`mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl transition-all duration-800 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+            <SectionHeading className={cn("mb-6 sm:text-5xl lg:text-6xl transition-all duration-800", revealClass(inView))}>
               <span className="text-balance">{dict.cta.title}</span>
-            </h2>
-            <p
-              className={`mb-12 max-w-xl text-lg text-muted-foreground transition-all duration-800 delay-100 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
+            </SectionHeading>
+            <p className={cn("mb-12 max-w-xl text-lg text-muted-foreground transition-all duration-800 delay-100", revealClass(inView))}>
               {dict.cta.subtitle}
             </p>
 
-            {/* Huge phone number */}
             <a
               href="tel:+380321234567"
-              className={`mb-12 text-3xl font-bold tracking-tight text-primary transition-all duration-800 delay-200 sm:text-4xl lg:text-5xl hover:text-foreground ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
+              className={cn(
+                "mb-12 text-3xl font-bold tracking-tight text-primary transition-all duration-800 delay-200 sm:text-4xl lg:text-5xl hover:text-foreground",
+                revealClass(inView)
+              )}
               style={{ fontFamily: "var(--font-display)" }}
             >
               {dict.cta.phone}
             </a>
 
-            {/* Buttons */}
-            <div
-              className={`flex flex-col gap-4 sm:flex-row transition-all duration-800 delay-300 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
+            <div className={cn("flex flex-col gap-4 sm:flex-row transition-all duration-800 delay-300", revealClass(inView))}>
               <a
                 href="tel:+380321234567"
                 className="btn-primary flex items-center gap-3 rounded-lg px-10 py-4 text-sm"
@@ -100,12 +89,7 @@ export function CTA({ dict }: { dict: Dictionary }) {
           <div className="absolute bottom-4 right-4 h-6 w-6 border-r border-b border-primary/15" />
         </div>
 
-        {/* Google Map section */}
-        <div
-          className={`mt-8 transition-all duration-800 delay-400 ${
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className={cn("mt-8 transition-all duration-800 delay-400", revealClass(inView))}>
           <div className="mb-4 flex items-center gap-3">
             <MapPin className="h-4 w-4 text-primary" />
             <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
@@ -125,7 +109,7 @@ export function CTA({ dict }: { dict: Dictionary }) {
             />
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

@@ -1,7 +1,11 @@
-import Image from "next/image";
-import type { Dictionary } from "@/lib/get-dictionary";
+"use client";
 
-export function Footer({ dict }: { dict: Dictionary }) {
+import Image from "next/image";
+import { useLanguage } from "./language-provider";
+import { Container } from "@/components/section";
+
+export function Footer() {
+  const { dict } = useLanguage();
   return (
     <footer className="relative overflow-hidden border-t border-border/50">
       {/* Background image */}
@@ -16,7 +20,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
         <div className="absolute inset-0 bg-background/97 dark:bg-background/95" />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-6 px-5 py-10 sm:flex-row lg:px-10">
+      <Container className="relative flex flex-col items-center justify-between gap-6 py-10 sm:flex-row">
         <div className="flex items-center gap-3">
           <div className="relative flex h-9 w-9 items-center justify-center">
             <div className="absolute inset-0 rounded-lg bg-primary/10" />
@@ -36,7 +40,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
             {dict.footer.license}
           </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

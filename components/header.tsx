@@ -1,22 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Phone, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { LanguageSwitcher } from "./language-switcher";
-import type { Locale } from "@/lib/i18n";
-import type { Dictionary } from "@/lib/get-dictionary";
-
-interface HeaderProps {
-  locale: Locale;
-  dict: Dictionary;
-}
+import { useLanguage } from "./language-provider";
+import { useLenis } from "./lenis-provider";
 
 const navIds = ["about", "services", "why-us", "process", "testimonials"] as const;
 
-export function Header({ locale, dict }: HeaderProps) {
+const MENU_CLOSE_DURATION = 250;
+
+export function Header() {
+  const { dict } = useLanguage();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuClosing, setMenuClosing] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -27,11 +29,25 @@ export function Header({ locale, dict }: HeaderProps) {
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileOpen) {
+      const scrollY = window.scrollY;
       document.body.classList.add("menu-open");
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
     } else {
+      const scrollY = Math.abs(parseInt(document.body.style.top || "0", 10));
       document.body.classList.remove("menu-open");
+      document.body.style.top = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      window.scrollTo(0, scrollY);
     }
-    return () => document.body.classList.remove("menu-open");
+    return () => {
+      document.body.classList.remove("menu-open");
+      document.body.style.top = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+    };
   }, [mobileOpen]);
 
   const navLabels = [
@@ -42,11 +58,37 @@ export function Header({ locale, dict }: HeaderProps) {
     dict.header.reviews,
   ];
 
-  function scrollTo(id: string) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+  function closeMenu(onDone?: () => void) {
+    if (!mobileOpen || menuClosing) return;
+    setMenuClosing(true);
+    setTimeout(() => {
       setMobileOpen(false);
+      setMenuClosing(false);
+      onDone?.();
+    }, MENU_CLOSE_DURATION);
+  }
+
+  const lenis = useLenis();
+
+  function scrollTo(id: string) {
+    closeMenu(() => {
+      if (lenis) {
+        lenis.scrollTo(`#${id}`, { offset: -80 });
+      } else {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
+  function handleLogoClick(e: React.MouseEvent) {
+    if (pathname === "/") {
+      e.preventDefault();
+      if (lenis) {
+        lenis.scrollTo(0);
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   }
 
@@ -59,9 +101,13 @@ export function Header({ locale, dict }: HeaderProps) {
             : "bg-transparent py-5"
         }`}
       >
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 lg:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
-          <a href={`/${locale}`} className="group flex items-center gap-3">
+          <Link
+            href="/"
+            onClick={handleLogoClick}
+            className="group flex items-center gap-3"
+          >
             <div className="relative flex h-10 w-10 items-center justify-center">
               <div className="absolute inset-0 rounded-lg bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)]" />
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="relative text-primary">
@@ -71,7 +117,7 @@ export function Header({ locale, dict }: HeaderProps) {
             <span className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-foreground">
               AEGIS
             </span>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
@@ -89,7 +135,7 @@ export function Header({ locale, dict }: HeaderProps) {
 
           {/* Right side */}
           <div className="flex items-center gap-2.5">
-            <LanguageSwitcher currentLocale={locale} />
+            <LanguageSwitcher />
             <ThemeToggle />
             <a
               href="tel:+380321234567"
@@ -99,7 +145,7 @@ export function Header({ locale, dict }: HeaderProps) {
               <span>{dict.header.call}</span>
             </a>
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={() => (mobileOpen ? closeMenu() : setMobileOpen(true))}
               className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-primary/30 hover:text-primary lg:hidden"
               aria-label="Toggle menu"
             >
@@ -111,11 +157,16 @@ export function Header({ locale, dict }: HeaderProps) {
 
       {/* === FULLSCREEN MOBILE MENU === */}
       {mobileOpen && (
-        <div className="mobile-menu-overlay lg:hidden" aria-modal="true" role="dialog">
+        <div
+          className={`mobile-menu-overlay lg:hidden ${menuClosing ? "mobile-menu-closing" : ""}`}
+          aria-modal="true"
+          role="dialog"
+          data-lenis-prevent
+        >
           {/* Close button */}
           <div className="flex justify-end px-5 pt-5">
             <button
-              onClick={() => setMobileOpen(false)}
+              onClick={() => closeMenu()}
               className="flex h-12 w-12 items-center justify-center rounded-xl border border-border text-foreground transition-colors hover:border-primary/30 hover:text-primary"
               aria-label="Close menu"
             >

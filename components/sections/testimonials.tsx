@@ -2,13 +2,16 @@
 
 import { useInView } from "@/hooks/use-in-view";
 import Image from "next/image";
-import type { Dictionary } from "@/lib/get-dictionary";
+import { useLanguage } from "@/components/language-provider";
+import { Section, Container, SectionBadge, SectionHeading, revealClass } from "@/components/section";
+import { cn } from "@/lib/utils";
 
-export function Testimonials({ dict }: { dict: Dictionary }) {
+export function Testimonials() {
+  const { dict } = useLanguage();
   const { ref, inView } = useInView();
 
   return (
-    <section id="testimonials" className="relative py-32 lg:py-44 overflow-hidden" ref={ref}>
+    <Section id="testimonials" ref={ref}>
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
@@ -21,38 +24,24 @@ export function Testimonials({ dict }: { dict: Dictionary }) {
         <div className="absolute inset-0 bg-background/97 dark:bg-background/95" />
       </div>
 
-      <div className="relative mx-auto max-w-[1400px] px-5 lg:px-10">
-        {/* Badge */}
-        <div
-          className={`mb-6 flex items-center gap-4 transition-all duration-800 ${
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="h-px w-12 bg-primary/50" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary">
-            {dict.testimonials.badge}
-          </span>
+      <Container className="relative">
+        <div className={cn("transition-all duration-800", revealClass(inView))}>
+          <SectionBadge>{dict.testimonials.badge}</SectionBadge>
         </div>
 
-        <h2
-          className={`mb-16 text-4xl font-bold tracking-tight text-foreground sm:text-5xl transition-all duration-800 delay-100 ${
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <SectionHeading className={cn("mb-16 transition-all duration-800 delay-100", revealClass(inView))}>
           {dict.testimonials.title}
-        </h2>
+        </SectionHeading>
 
-        {/* Cards - offset layout */}
         <div className="grid gap-5 md:grid-cols-3">
           {dict.testimonials.items.map((item, i) => (
             <div
               key={item.name}
-              className={`tactical-card glass-panel glow-border group relative overflow-hidden rounded-xl p-7 lg:p-8 transition-all duration-800 ${
-                i === 1 ? "md:translate-y-8" : ""
-              } ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
+              className={cn(
+                "tactical-card glass-panel glow-border group relative overflow-hidden rounded-xl p-7 lg:p-8 transition-all duration-800",
+                i === 1 && "md:translate-y-8",
+                revealClass(inView)
+              )}
               style={{ transitionDelay: `${200 + i * 150}ms` }}
             >
               {/* Large quote mark */}
@@ -83,7 +72,7 @@ export function Testimonials({ dict }: { dict: Dictionary }) {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

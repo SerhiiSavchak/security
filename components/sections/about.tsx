@@ -2,9 +2,12 @@
 
 import { useInView } from "@/hooks/use-in-view";
 import Image from "next/image";
-import type { Dictionary } from "@/lib/get-dictionary";
+import { useLanguage } from "@/components/language-provider";
+import { Section, Container, SectionBadge, SectionHeading, revealClass } from "@/components/section";
+import { cn } from "@/lib/utils";
 
-export function About({ dict }: { dict: Dictionary }) {
+export function About() {
+  const { dict } = useLanguage();
   const { ref, inView } = useInView();
 
   const stats = [
@@ -13,53 +16,28 @@ export function About({ dict }: { dict: Dictionary }) {
     { value: dict.about.stats.objects, label: dict.about.stats.objectsLabel },
   ];
 
+  const r = (d?: string) => cn("transition-all duration-800", revealClass(inView), d);
+
   return (
-    <section id="about" className="relative py-32 lg:py-44 overflow-hidden" ref={ref}>
-      {/* Background accent */}
+    <Section id="about" ref={ref}>
       <div
-        className="absolute left-0 top-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full opacity-[0.03] blur-3xl"
+        className="absolute left-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full opacity-[0.03] blur-3xl"
         style={{ background: "hsl(var(--glow))" }}
       />
 
-      <div className="relative mx-auto max-w-[1400px] px-5 lg:px-10">
-        {/* Section label */}
-        <div
-          className={`mb-6 flex items-center gap-4 transition-all duration-800 ${
-            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="h-px w-12 bg-primary/50" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary">
-            {dict.about.badge}
-          </span>
+      <Container className="relative">
+        <div className={r()}>
+          <SectionBadge>{dict.about.badge}</SectionBadge>
         </div>
 
-        {/* Split layout */}
         <div className="flex flex-col gap-16 lg:flex-row lg:items-start lg:gap-24">
-          {/* Left: text + image */}
           <div className="lg:flex-1">
-            <h2
-              className={`mb-8 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl transition-all duration-800 delay-100 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {dict.about.title}
-            </h2>
-            <p
-              className={`mb-10 max-w-xl text-lg leading-relaxed text-muted-foreground transition-all duration-800 delay-200 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
+            <SectionHeading className={cn("mb-8", r("delay-100"))}>{dict.about.title}</SectionHeading>
+            <p className={cn("mb-10 max-w-xl text-lg leading-relaxed text-muted-foreground", r("delay-200"))}>
               {dict.about.description}
             </p>
 
-            {/* Team image */}
-            <div
-              className={`relative overflow-hidden rounded-xl h-64 lg:h-80 img-overlay transition-all duration-800 delay-300 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
+            <div className={cn("relative overflow-hidden rounded-xl h-64 lg:h-80 img-overlay", r("delay-300"))}>
               <Image
                 src="/images/about-team.jpg"
                 alt="Security team professionals"
@@ -78,9 +56,7 @@ export function About({ dict }: { dict: Dictionary }) {
             {stats.map((stat, i) => (
               <div
                 key={stat.label}
-                className={`tactical-card glass-panel glow-border rounded-xl px-7 py-6 transition-all duration-800 ${
-                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
+                className={cn("tactical-card glass-panel glow-border rounded-xl px-7 py-6", r())}
                 style={{ transitionDelay: `${300 + i * 150}ms` }}
               >
                 <div
@@ -99,13 +75,7 @@ export function About({ dict }: { dict: Dictionary }) {
               </div>
             ))}
 
-            {/* Patrol image in stats column */}
-            <div
-              className={`relative overflow-hidden rounded-xl h-48 img-overlay transition-all duration-800 ${
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: "600ms" }}
-            >
+            <div className={cn("relative overflow-hidden rounded-xl h-48 img-overlay", r())} style={{ transitionDelay: "600ms" }}>
               <Image
                 src="/images/guard-patrol.jpg"
                 alt="Security guard on patrol"
@@ -116,7 +86,7 @@ export function About({ dict }: { dict: Dictionary }) {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }
