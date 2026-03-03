@@ -11,7 +11,7 @@ export function WhyUs({ dict }: { dict: Dictionary }) {
   const { ref: glowRef, handleMouseMove } = useMouseGlow();
 
   return (
-    <section id="why-us" className="relative py-32 lg:py-44" ref={viewRef}>
+    <section id="why-us" className="relative py-32 lg:py-44 overflow-hidden" ref={viewRef}>
       {/* Background glow */}
       <div
         className="absolute right-0 top-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full opacity-[0.025] blur-3xl"

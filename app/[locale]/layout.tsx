@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { Preloader } from "@/components/preloader";
 import { Footer } from "@/components/footer";
 import { NoiseOverlay } from "@/components/noise-overlay";
+import { ScrollProgress } from "@/components/scroll-progress";
 import "@/app/globals.css";
 
 const inter = Inter({
@@ -57,6 +58,7 @@ export default async function LocaleLayout({
       >
         <ThemeProvider>
           <NoiseOverlay />
+          <ScrollProgress />
           <Preloader />
           <Header locale={locale as Locale} dict={dict} />
           <main>{children}</main>

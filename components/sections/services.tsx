@@ -1,6 +1,7 @@
 "use client";
 
 import { useInView, useMouseGlow } from "@/hooks/use-in-view";
+import Image from "next/image";
 import type { Dictionary } from "@/lib/get-dictionary";
 
 function IconShield() {
@@ -74,8 +75,19 @@ export function Services({ dict }: { dict: Dictionary }) {
   const { ref: glowRef, handleMouseMove } = useMouseGlow();
 
   return (
-    <section id="services" className="relative py-32 lg:py-44" ref={viewRef}>
-      {/* Diagonal top overlay */}
+    <section id="services" className="relative py-32 lg:py-44 overflow-hidden" ref={viewRef}>
+      {/* Background image with overlay */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/city-night.jpg"
+          alt=""
+          fill
+          className="object-cover opacity-[0.06] dark:opacity-[0.08]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-background/95 dark:bg-background/92" />
+      </div>
+
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.015] to-transparent" />
 
       <div className="relative mx-auto max-w-[1400px] px-5 lg:px-10">
@@ -100,7 +112,7 @@ export function Services({ dict }: { dict: Dictionary }) {
           {dict.services.title}
         </h2>
 
-        {/* Cards grid with mouse glow tracking */}
+        {/* Cards grid */}
         <div
           ref={glowRef}
           onMouseMove={handleMouseMove}

@@ -1,9 +1,22 @@
+import Image from "next/image";
 import type { Dictionary } from "@/lib/get-dictionary";
 
 export function Footer({ dict }: { dict: Dictionary }) {
   return (
-    <footer className="relative border-t border-border/50">
-      <div className="mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-6 px-5 py-10 sm:flex-row lg:px-10">
+    <footer className="relative overflow-hidden border-t border-border/50">
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/city-night.jpg"
+          alt=""
+          fill
+          className="object-cover opacity-[0.04] dark:opacity-[0.06]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-background/97 dark:bg-background/95" />
+      </div>
+
+      <div className="relative mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-6 px-5 py-10 sm:flex-row lg:px-10">
         <div className="flex items-center gap-3">
           <div className="relative flex h-9 w-9 items-center justify-center">
             <div className="absolute inset-0 rounded-lg bg-primary/10" />

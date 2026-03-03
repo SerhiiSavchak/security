@@ -1,7 +1,7 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
-import { Phone, Send } from "lucide-react";
+import { Phone, Send, MapPin } from "lucide-react";
 import type { Dictionary } from "@/lib/get-dictionary";
 
 export function CTA({ dict }: { dict: Dictionary }) {
@@ -10,6 +10,7 @@ export function CTA({ dict }: { dict: Dictionary }) {
   return (
     <section className="relative py-32 lg:py-44" ref={ref}>
       <div className="mx-auto max-w-[1400px] px-5 lg:px-10">
+        {/* CTA Panel */}
         <div className="relative overflow-hidden rounded-2xl border border-border/50">
           {/* Animated background */}
           <div
@@ -97,6 +98,32 @@ export function CTA({ dict }: { dict: Dictionary }) {
           <div className="absolute right-4 top-4 h-6 w-6 border-r border-t border-primary/15" />
           <div className="absolute bottom-4 left-4 h-6 w-6 border-b border-l border-primary/15" />
           <div className="absolute bottom-4 right-4 h-6 w-6 border-r border-b border-primary/15" />
+        </div>
+
+        {/* Google Map section */}
+        <div
+          className={`mt-8 transition-all duration-800 delay-400 ${
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <div className="mb-4 flex items-center gap-3">
+            <MapPin className="h-4 w-4 text-primary" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              Kyiv, Ukraine
+            </span>
+          </div>
+          <div className="map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.5!2d30.5234!3d50.4501!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce56b2456d3b%3A0xd062ae171b57e947!2sKhreshchatyk%20St%2C%20Kyiv!5e0!3m2!1sen!2sua!4v1700000000000!5m2!1sen!2sua"
+              width="100%"
+              height="300"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="AEGIS Security office location"
+            />
+          </div>
         </div>
       </div>
     </section>

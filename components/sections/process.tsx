@@ -7,7 +7,7 @@ export function Process({ dict }: { dict: Dictionary }) {
   const { ref, inView } = useInView();
 
   return (
-    <section id="process" className="relative py-32 lg:py-44" ref={ref}>
+    <section id="process" className="relative py-32 lg:py-44 overflow-hidden" ref={ref}>
       {/* Subtle bg gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.01] to-transparent" />
 

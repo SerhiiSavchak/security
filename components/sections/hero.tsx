@@ -2,7 +2,52 @@
 
 import { useEffect, useState } from "react";
 import { Phone } from "lucide-react";
+import Image from "next/image";
 import type { Dictionary } from "@/lib/get-dictionary";
+
+function AnimatedCCTV() {
+  return (
+    <div className="relative flex items-center gap-3">
+      {/* Camera body */}
+      <div className="relative">
+        <svg
+          width="36"
+          height="36"
+          viewBox="0 0 40 40"
+          fill="none"
+          className="text-primary"
+        >
+          {/* Mount */}
+          <rect x="17" y="2" width="6" height="6" rx="1" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
+          {/* Arm */}
+          <line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" strokeWidth="1.5" />
+          {/* Camera body */}
+          <g className="animate-camera-pan origin-[20px_14px]">
+            <rect x="10" y="14" width="20" height="14" rx="3" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.5" />
+            {/* Lens */}
+            <circle cx="20" cy="21" r="4" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="20" cy="21" r="1.5" fill="currentColor" className="animate-blink-dot" />
+            {/* Lens glass */}
+            <path d="M7 18l3-2v10l-3-2V18z" fill="currentColor" fillOpacity="0.15" stroke="currentColor" strokeWidth="1" />
+          </g>
+        </svg>
+        {/* Recording dot */}
+        <div className="absolute -right-1 -top-1 flex h-3 w-3 items-center justify-center">
+          <span className="absolute h-full w-full rounded-full bg-red-500/50 animate-pulse-ring" />
+          <span className="relative h-1.5 w-1.5 rounded-full bg-red-500" />
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald animate-blink-dot">
+          REC
+        </span>
+        <span className="font-mono text-[9px] text-muted-foreground/40">
+          CAM-01
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export function Hero({ dict }: { dict: Dictionary }) {
   const [loaded, setLoaded] = useState(false);
@@ -14,16 +59,21 @@ export function Hero({ dict }: { dict: Dictionary }) {
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
-      {/* === BACKGROUND LAYERS === */}
-
-      {/* Animated gradient background */}
-      <div
-        className="absolute inset-0 animate-gradient-drift"
-        style={{
-          background: "linear-gradient(135deg, hsl(var(--background)) 0%, hsl(225,30%,5%) 30%, hsl(225,25%,8%) 60%, hsl(var(--background)) 100%)",
-          backgroundSize: "200% 200%",
-        }}
-      />
+      {/* === BACKGROUND IMAGE === */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-bg.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        {/* Dark overlay for dark theme */}
+        <div className="absolute inset-0 bg-background/80 dark:bg-background/70" />
+        {/* Color tint overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-emerald/5" />
+      </div>
 
       {/* Grid overlay */}
       <div className="grid-tactical absolute inset-0 animate-grid-breathe" />
@@ -41,7 +91,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
       </div>
 
       {/* Large radar - right */}
-      <div className="absolute -right-[10%] top-[5%] h-[700px] w-[700px] opacity-15 lg:opacity-25">
+      <div className="absolute -right-[10%] top-[5%] h-[700px] w-[700px] opacity-10 lg:opacity-20">
         {[0, 1, 2, 3, 4].map((i) => (
           <div
             key={i}
@@ -52,7 +102,6 @@ export function Hero({ dict }: { dict: Dictionary }) {
             }}
           />
         ))}
-        {/* Sweep arm */}
         <div className="absolute inset-0 animate-radar-sweep origin-center">
           <div
             className="mx-auto h-1/2 w-0.5"
@@ -62,36 +111,13 @@ export function Hero({ dict }: { dict: Dictionary }) {
             }}
           />
         </div>
-        {/* Conic trail */}
         <div
           className="absolute inset-0 animate-radar-sweep origin-center rounded-full"
           style={{ background: "conic-gradient(from 0deg, transparent 0deg, hsl(var(--glow) / 0.06) 40deg, transparent 120deg)" }}
         />
-        {/* Blips */}
         <div className="absolute left-[30%] top-[22%] h-2 w-2 rounded-full bg-glow animate-glow-pulse" style={{ animationDelay: "0.3s" }} />
         <div className="absolute left-[62%] top-[38%] h-1.5 w-1.5 rounded-full bg-emerald animate-glow-pulse" style={{ animationDelay: "1s" }} />
         <div className="absolute left-[45%] top-[68%] h-2 w-2 rounded-full bg-glow animate-glow-pulse" style={{ animationDelay: "1.8s" }} />
-        <div className="absolute left-[72%] top-[55%] h-1 w-1 rounded-full bg-glow animate-glow-pulse" style={{ animationDelay: "2.5s" }} />
-      </div>
-
-      {/* Smaller radar - bottom left */}
-      <div className="absolute -left-[12%] bottom-[0%] hidden h-[400px] w-[400px] opacity-10 lg:block">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className="absolute rounded-full border"
-            style={{
-              inset: `${i * 15}%`,
-              borderColor: `hsl(var(--glow) / ${0.1 - i * 0.025})`,
-            }}
-          />
-        ))}
-        <div className="absolute inset-0 animate-radar-sweep origin-center" style={{ animationDirection: "reverse", animationDuration: "7s" }}>
-          <div
-            className="mx-auto h-1/2 w-0.5"
-            style={{ background: "linear-gradient(to top, hsl(var(--glow) / 0.4), transparent)" }}
-          />
-        </div>
       </div>
 
       {/* Floating glow orbs */}
@@ -132,7 +158,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
 
             {/* Headline */}
             <h1
-              className={`mb-2 text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[0.95] tracking-tight transition-all duration-1000 delay-200 ${
+              className={`mb-2 text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight transition-all duration-1000 delay-200 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ fontFamily: "var(--font-display)" }}
@@ -140,7 +166,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
               <span className="block text-foreground">{dict.hero.title}</span>
             </h1>
             <h1
-              className={`mb-8 text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[0.95] tracking-tight text-primary transition-all duration-1000 delay-400 ${
+              className={`mb-8 text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight text-primary transition-all duration-1000 delay-400 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ fontFamily: "var(--font-display)" }}
@@ -189,15 +215,9 @@ export function Hero({ dict }: { dict: Dictionary }) {
           >
             <div className="glass-panel rounded-xl p-px">
               <div className="rounded-xl bg-card/60 p-6 lg:p-8">
-                {/* HUD header */}
+                {/* HUD header -- replaced SYSTEM ACTIV with animated CCTV */}
                 <div className="mb-6 flex items-center justify-between border-b border-border/50 pb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-75" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald" />
-                    </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald">SYSTEM ACTIVE</span>
-                  </div>
+                  <AnimatedCCTV />
                   <span className="font-mono text-[10px] text-muted-foreground/50">v4.2.1</span>
                 </div>
 
@@ -208,7 +228,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
                     { label: "UPTIME", value: "99.97%", color: "text-primary" },
                     { label: "ACTIVE SHIELDS", value: "1,247", color: "text-primary" },
                     { label: "RESPONSE TIME", value: "< 180s", color: "text-emerald" },
-                  ].map((item, i) => (
+                  ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between">
                       <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground/60">{item.label}</span>
                       <span className={`font-mono text-sm font-semibold ${item.color}`}>{item.value}</span>
@@ -235,12 +255,28 @@ export function Hero({ dict }: { dict: Dictionary }) {
                 </div>
               </div>
             </div>
+
+            {/* Small surveillance image below the HUD */}
+            <div className="mt-4 overflow-hidden rounded-xl img-overlay h-32 hidden lg:block">
+              <Image
+                src="/images/surveillance.jpg"
+                alt="Security surveillance system"
+                fill
+                className="object-cover"
+                sizes="440px"
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      {/* Bottom gradient -- improved for light theme */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-40"
+        style={{
+          background: "linear-gradient(to top, hsl(var(--background)), hsl(var(--background) / 0.7) 40%, transparent)",
+        }}
+      />
 
       {/* HUD corners */}
       <div className="absolute left-5 top-24 h-12 w-12 border-l border-t border-primary/10 hidden lg:block" />

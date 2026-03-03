@@ -1,13 +1,26 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
+import Image from "next/image";
 import type { Dictionary } from "@/lib/get-dictionary";
 
 export function Testimonials({ dict }: { dict: Dictionary }) {
   const { ref, inView } = useInView();
 
   return (
-    <section id="testimonials" className="relative py-32 lg:py-44" ref={ref}>
+    <section id="testimonials" className="relative py-32 lg:py-44 overflow-hidden" ref={ref}>
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/surveillance.jpg"
+          alt=""
+          fill
+          className="object-cover opacity-[0.04] dark:opacity-[0.06]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-background/97 dark:bg-background/95" />
+      </div>
+
       <div className="relative mx-auto max-w-[1400px] px-5 lg:px-10">
         {/* Badge */}
         <div
