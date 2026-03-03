@@ -59,7 +59,7 @@ export function CTA({ dict }: { dict: Dictionary }) {
 
             {/* Huge phone number */}
             <a
-              href="tel:+380441234567"
+              href="tel:+380321234567"
               className={`mb-12 text-3xl font-bold tracking-tight text-primary transition-all duration-800 delay-200 sm:text-4xl lg:text-5xl hover:text-foreground ${
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
@@ -75,7 +75,7 @@ export function CTA({ dict }: { dict: Dictionary }) {
               }`}
             >
               <a
-                href="tel:+380441234567"
+                href="tel:+380321234567"
                 className="btn-primary flex items-center gap-3 rounded-lg px-10 py-4 text-sm"
               >
                 <Phone className="h-4 w-4" />
@@ -109,12 +109,12 @@ export function CTA({ dict }: { dict: Dictionary }) {
           <div className="mb-4 flex items-center gap-3">
             <MapPin className="h-4 w-4 text-primary" />
             <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-              Kyiv, Ukraine
+              Lviv, Ukraine
             </span>
           </div>
           <div className="map-container">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.5!2d30.5234!3d50.4501!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce56b2456d3b%3A0xd062ae171b57e947!2sKhreshchatyk%20St%2C%20Kyiv!5e0!3m2!1sen!2sua!4v1700000000000!5m2!1sen!2sua"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.0!2d24.0315!3d49.8421!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add7c09109a57%3A0x4223c517012378e2!2sLviv%2C%20Lviv%20Oblast%2C%20Ukraine!5e0!3m2!1sen!2sua!4v1700000000000!5m2!1sen!2sua"
               width="100%"
               height="300"
               style={{ border: 0 }}

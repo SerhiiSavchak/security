@@ -86,7 +86,7 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
       <div className="grid-tactical absolute inset-0 opacity-20" />
 
-      <div className="relative mx-auto max-w-[900px] px-5 lg:px-10">
+      <div className="relative mx-auto w-full max-w-[900px] px-5 lg:px-10 overflow-x-hidden">
         {/* Badge */}
         <div className="mb-6 flex items-center gap-4">
           <div className="h-px w-12 bg-primary/50" />
@@ -106,9 +106,9 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
         </p>
 
         {/* Timeline */}
-        <div className="relative">
+        <div className="relative flex justify-center">
           {/* Vertical glowing line */}
-          <div className="absolute left-[27px] top-0 h-full w-px bg-border/30 md:left-1/2 md:-translate-x-px">
+          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-px bg-border/30">
             {/* Filled glow progress */}
             <div
               className="w-full origin-top transition-[height] duration-100 ease-linear"
@@ -141,10 +141,10 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
               return (
                 <div
                   key={i}
-                  className={`relative flex items-start gap-6 md:gap-0 ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  className={`relative flex items-start justify-center gap-6 md:gap-0 md:justify-start ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
                   {/* Content side */}
-                  <div className={`md:w-1/2 ${isEven ? "md:pr-16 md:text-right" : "md:pl-16"}`}>
+                  <div className={`flex-1 min-w-0 text-center md:flex-none md:w-1/2 md:text-left ${isEven ? "md:pr-16 md:text-right" : "md:pl-16"}`}>
                     <div
                       className={`transition-all duration-700 ${
                         isActive
@@ -154,7 +154,7 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
                       style={{ transitionDelay: isActive ? "200ms" : "0ms" }}
                     >
                       {/* Time label */}
-                      <div className={`mb-3 flex items-center gap-3 ${isEven ? "md:justify-end" : ""}`}>
+                      <div className={`mb-3 flex items-center justify-center gap-3 md:justify-start ${isEven ? "md:justify-end" : ""}`}>
                         <span
                           className={`font-mono text-2xl font-bold tracking-tight transition-colors duration-500 ${
                             isActive ? "text-primary" : "text-muted-foreground/30"
@@ -174,7 +174,7 @@ export function ResponseTimeline({ dict }: { dict: Dictionary }) {
                   </div>
 
                   {/* Center node */}
-                  <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 flex-shrink-0">
+                  <div className="absolute left-1/2 -translate-x-1/2 flex-shrink-0">
                     <div
                       className={`relative flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all duration-700 ${
                         isActive

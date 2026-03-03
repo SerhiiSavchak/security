@@ -5,8 +5,6 @@ import { About } from "@/components/sections/about";
 import { Services } from "@/components/sections/services";
 import { WhyUs } from "@/components/sections/why-us";
 import { ResponseTimeline } from "@/components/sections/response-timeline";
-import { CoverageMap } from "@/components/sections/coverage-map";
-import { BeforeAfter } from "@/components/sections/before-after";
 import { Process } from "@/components/sections/process";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CTA } from "@/components/sections/cta";
@@ -26,8 +24,6 @@ export default async function Page({
       <Services dict={dict} />
       <WhyUs dict={dict} />
       <ResponseTimeline dict={dict} />
-      <CoverageMap dict={dict} />
-      <BeforeAfter dict={dict} />
       <Process dict={dict} />
       <Testimonials dict={dict} />
       <CTA dict={dict} />

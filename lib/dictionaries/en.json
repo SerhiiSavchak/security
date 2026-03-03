@@ -96,7 +96,7 @@
   "cta": {
     "title": "Ready to Secure Your Protection",
     "subtitle": "Contact us for a free consultation and security audit of your facility.",
-    "phone": "+380 (44) 123-45-67",
+    "phone": "+380 (32) 123-45-67",
     "telegram": "Message on Telegram",
     "call": "Call Us"
   },
@@ -110,25 +110,6 @@
       { "time": "30", "label": "Patrol team dispatched" },
       { "time": "5-7 min", "label": "Arrival on site" }
     ]
-  },
-  "coverage": {
-    "badge": "COVERAGE AREA",
-    "title": "Security Coverage Map",
-    "subtitle": "Real-time overview of protected zones, patrol routes, and surveillance points across the city.",
-    "legend_patrol": "Patrol Unit",
-    "legend_camera": "Camera Point",
-    "legend_station": "Control Station",
-    "stat_zones": "Protected Zones",
-    "stat_points": "Active Points",
-    "stat_response": "Min Response",
-    "stat_monitoring": "Monitoring"
-  },
-  "beforeAfter": {
-    "badge": "VISUAL PROOF",
-    "title": "Before & After Security",
-    "subtitle": "Drag the slider to see the difference professional security makes.",
-    "labelBefore": "Without Security",
-    "labelAfter": "With Security"
   },
   "footer": {
     "rights": "All rights reserved",
