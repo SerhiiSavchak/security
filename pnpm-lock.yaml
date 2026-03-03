@@ -14,6 +14,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lenis:
+        specifier: ^1.3.18-dev.1
+        version: 1.3.18-dev.1(react@19.2.4)
       lucide-react:
         specifier: ^0.469.0
         version: 0.469.0(react@19.2.4)
@@ -426,6 +429,20 @@ packages:
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
+
+  lenis@1.3.18-dev.1:
+    resolution: {integrity: sha512-OMO+lgRxk2lDzVP34GRB2TniGsWfgAOdMZRoA+nL7+TnVFflhMvXTKbVTJrpkgRAposcJDVdJYz5P+gCp2F/Tg==}
+    peerDependencies:
+      '@nuxt/kit': '>=3.0.0'
+      react: '>=17.0.0'
+      vue: '>=3.0.0'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      react:
+        optional: true
+      vue:
+        optional: true
 
   lightningcss-android-arm64@1.31.1:
     resolution: {integrity: sha512-HXJF3x8w9nQ4jbXRiNppBCqeZPIAfUo8zE/kOEGbW5NZvGc/K7nMxbhIr+YlFlHW5mpbg/YFPdbnCh1wAXCKFg==}
@@ -871,6 +888,10 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   jiti@2.6.1: {}
+
+  lenis@1.3.18-dev.1(react@19.2.4):
+    optionalDependencies:
+      react: 19.2.4
 
   lightningcss-android-arm64@1.31.1:
     optional: true
