@@ -100,6 +100,36 @@
     "telegram": "Message on Telegram",
     "call": "Call Us"
   },
+  "response": {
+    "badge": "RESPONSE PROTOCOL",
+    "title": "Response Scenario in 60 Seconds",
+    "subtitle": "From signal to on-site response -- precision-timed protocol.",
+    "steps": [
+      { "time": "0", "label": "Signal received from the object" },
+      { "time": "15", "label": "Operator accepted the call" },
+      { "time": "30", "label": "Patrol team dispatched" },
+      { "time": "5-7 min", "label": "Arrival on site" }
+    ]
+  },
+  "coverage": {
+    "badge": "COVERAGE AREA",
+    "title": "Security Coverage Map",
+    "subtitle": "Real-time overview of protected zones, patrol routes, and surveillance points across the city.",
+    "legend_patrol": "Patrol Unit",
+    "legend_camera": "Camera Point",
+    "legend_station": "Control Station",
+    "stat_zones": "Protected Zones",
+    "stat_points": "Active Points",
+    "stat_response": "Min Response",
+    "stat_monitoring": "Monitoring"
+  },
+  "beforeAfter": {
+    "badge": "VISUAL PROOF",
+    "title": "Before & After Security",
+    "subtitle": "Drag the slider to see the difference professional security makes.",
+    "labelBefore": "Without Security",
+    "labelAfter": "With Security"
+  },
   "footer": {
     "rights": "All rights reserved",
     "license": "Licensed by MIA of Ukraine"

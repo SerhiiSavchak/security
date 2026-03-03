@@ -4,7 +4,9 @@ import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
 import { Services } from "@/components/sections/services";
 import { WhyUs } from "@/components/sections/why-us";
-import { SecurityDashboard } from "@/components/sections/security-dashboard";
+import { ResponseTimeline } from "@/components/sections/response-timeline";
+import { CoverageMap } from "@/components/sections/coverage-map";
+import { BeforeAfter } from "@/components/sections/before-after";
 import { Process } from "@/components/sections/process";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CTA } from "@/components/sections/cta";
@@ -23,7 +25,9 @@ export default async function Page({
       <About dict={dict} />
       <Services dict={dict} />
       <WhyUs dict={dict} />
-      <SecurityDashboard dict={dict} />
+      <ResponseTimeline dict={dict} />
+      <CoverageMap dict={dict} />
+      <BeforeAfter dict={dict} />
       <Process dict={dict} />
       <Testimonials dict={dict} />
       <CTA dict={dict} />
