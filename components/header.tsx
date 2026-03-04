@@ -71,14 +71,19 @@ export function Header() {
   const lenis = useLenis();
 
   function scrollTo(id: string) {
-    closeMenu(() => {
+    const doScroll = () => {
       if (lenis) {
         lenis.scrollTo(`#${id}`, { offset: -80 });
       } else {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    });
+    };
+    if (mobileOpen || menuClosing) {
+      closeMenu(doScroll);
+    } else {
+      doScroll();
+    }
   }
 
   function handleLogoClick(e: React.MouseEvent) {
