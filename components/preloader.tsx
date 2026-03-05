@@ -7,23 +7,42 @@ export function Preloader() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let interval: ReturnType<typeof setInterval> | null = null;
+    let removeTimer: ReturnType<typeof setTimeout> | null = null;
+    let deferredTimer: ReturnType<typeof setTimeout> | null = null;
+
+    interval = setInterval(() => {
       setProgress((p) => {
-        if (p >= 100) {
+        if (p >= 100 && interval) {
           clearInterval(interval);
           return 100;
         }
-        return p + Math.random() * 15 + 5;
+        return p + Math.random() * 20 + 10;
       });
-    }, 120);
+    }, 60);
 
-    const fadeTimer = setTimeout(() => setPhase("done"), 2200);
-    const removeTimer = setTimeout(() => setPhase("hidden"), 2900);
+    const onReady = () => {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+      setProgress(100);
+      setPhase("done");
+      removeTimer = setTimeout(() => setPhase("hidden"), 350);
+      window.removeEventListener("load", onReady);
+    };
+
+    if (document.readyState === "complete") {
+      deferredTimer = setTimeout(onReady, 50);
+    } else {
+      window.addEventListener("load", onReady);
+    }
 
     return () => {
-      clearInterval(interval);
-      clearTimeout(fadeTimer);
-      clearTimeout(removeTimer);
+      if (deferredTimer) clearTimeout(deferredTimer);
+      if (interval) clearInterval(interval);
+      window.removeEventListener("load", onReady);
+      if (removeTimer) clearTimeout(removeTimer);
     };
   }, []);
 
@@ -31,7 +50,7 @@ export function Preloader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[200] flex items-center justify-center transition-all duration-700 ${
+      className={`fixed inset-0 z-[200] flex items-center justify-center transition-all duration-300 ${
         phase === "done" ? "opacity-0 scale-105" : "opacity-100 scale-100"
       }`}
       style={{ background: "hsl(225, 30%, 3%)" }}

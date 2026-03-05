@@ -16,7 +16,7 @@ export function Hero() {
   }, [lenis]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 2600);
+    const timer = setTimeout(() => setLoaded(true), 400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -109,12 +109,12 @@ export function Hero() {
       />
 
       {/* === CONTENT === */}
-      <div className="hero-content relative z-10 mx-auto w-full max-w-7xl px-4 pt-28 pb-20 sm:px-6 lg:px-8 lg:pt-0 lg:pb-0">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-20">
+      <div className="hero-content relative z-10 mx-auto w-full max-w-7xl px-4 pt-24 pb-8 sm:px-6 sm:pt-28 sm:pb-12 lg:px-8 lg:pt-0 lg:pb-0">
+        <div className="flex min-h-0 flex-col lg:flex-row lg:items-center lg:gap-20 hero-mobile-stack">
           {/* Left content */}
           <div className="flex-1 max-w-2xl">
             <div
-              className={`mb-11 inline-flex select-none items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-5 py-2.5 transition-all duration-1000 ${
+              className={`mb-6 inline-flex select-none items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-5 py-2.5 transition-all duration-1000 sm:mb-11 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
@@ -128,7 +128,7 @@ export function Hero() {
             </div>
 
             <h1
-              className={`hero-headline mb-8 text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[1.15] tracking-tight transition-all duration-1000 delay-200 ${
+              className={`hero-headline mb-4 text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[1.15] tracking-tight transition-all duration-1000 delay-200 sm:mb-8 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ fontFamily: "var(--font-display)" }}
@@ -138,7 +138,7 @@ export function Hero() {
             </h1>
 
             <p
-              className={`hero-subtitle mb-12 max-w-lg text-lg leading-relaxed text-muted-foreground transition-all duration-1000 delay-500 ${
+              className={`hero-subtitle mb-6 max-w-lg text-lg leading-relaxed text-muted-foreground transition-all duration-1000 delay-500 sm:mb-12 ${
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               }`}
             >
@@ -168,7 +168,7 @@ export function Hero() {
 
           {/* Right: Hero Visual (CCTV cameras) */}
           <div
-            className={`mt-16 lg:mt-0 flex-1 flex justify-end min-w-0 transition-all duration-1200 delay-600 ${
+            className={`mt-8 flex-1 flex min-h-0 justify-end min-w-0 transition-all duration-1200 delay-600 sm:mt-12 lg:mt-0 hero-visual-mobile ${
               loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >

@@ -26,27 +26,19 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open — только overflow: hidden, без position: fixed,
+  // чтобы не сбрасывать позицию скролла при открытии/закрытии
   useEffect(() => {
     if (mobileOpen) {
-      const scrollY = window.scrollY;
+      document.documentElement.classList.add("menu-open");
       document.body.classList.add("menu-open");
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
     } else {
-      const scrollY = Math.abs(parseInt(document.body.style.top || "0", 10));
+      document.documentElement.classList.remove("menu-open");
       document.body.classList.remove("menu-open");
-      document.body.style.top = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      window.scrollTo(0, scrollY);
     }
     return () => {
+      document.documentElement.classList.remove("menu-open");
       document.body.classList.remove("menu-open");
-      document.body.style.top = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
     };
   }, [mobileOpen]);
 
@@ -70,17 +62,26 @@ export function Header() {
 
   const lenis = useLenis();
 
-  function scrollTo(id: string) {
+  function scrollTo(id: string, fromMobileMenu = false) {
     const doScroll = () => {
-      if (lenis) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      // После закрытия мобильного меню body восстанавливается — Lenis может быть рассинхронизирован.
+      // Используем нативный scrollIntoView для надёжной работы.
+      if (fromMobileMenu) {
+        const headerOffset = 80;
+        const elTop = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: elTop - headerOffset, behavior: "smooth" });
+      } else if (lenis) {
         lenis.scrollTo(`#${id}`, { offset: -80 });
       } else {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     };
     if (mobileOpen || menuClosing) {
-      closeMenu(doScroll);
+      closeMenu(() => {
+        setTimeout(doScroll, 100);
+      });
     } else {
       doScroll();
     }
@@ -150,7 +151,16 @@ export function Header() {
               <span>{dict.header.call}</span>
             </a>
             <button
-              onClick={() => (mobileOpen ? closeMenu() : setMobileOpen(true))}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (mobileOpen) {
+                  closeMenu();
+                } else {
+                  setMobileOpen(true);
+                }
+              }}
               className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-primary/30 hover:text-primary lg:hidden"
               aria-label="Toggle menu"
             >
@@ -171,7 +181,12 @@ export function Header() {
           {/* Close button */}
           <div className="flex justify-end px-5 pt-5">
             <button
-              onClick={() => closeMenu()}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
+              }}
               className="flex h-12 w-12 items-center justify-center rounded-xl border border-border text-foreground transition-colors hover:border-primary/30 hover:text-primary"
               aria-label="Close menu"
             >
@@ -198,7 +213,12 @@ export function Header() {
             {navIds.map((id, i) => (
               <button
                 key={id}
-                onClick={() => scrollTo(id)}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  scrollTo(id, true);
+                }}
                 className="mobile-menu-item w-full max-w-sm rounded-xl px-6 py-5 text-center text-xl font-medium text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground"
                 style={{ animationDelay: `${(i + 1) * 80}ms` }}
               >

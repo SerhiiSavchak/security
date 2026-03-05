@@ -7,6 +7,7 @@ import "lenis/dist/lenis.css";
 type LenisContextValue = {
   scrollTo: (target: string | HTMLElement | number, options?: { offset?: number }) => void;
   progress: number;
+  getScrollY: () => number;
 };
 
 const LenisContext = createContext<LenisContextValue | null>(null);
@@ -29,6 +30,11 @@ export function useLenis() {
 export function LenisProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
   const [progress, setProgress] = useState(0);
+
+  const getScrollY = useCallback(() => {
+    const lenis = lenisRef.current;
+    return lenis ? lenis.scroll : window.scrollY;
+  }, []);
 
   const scrollTo = useCallback((target: string | HTMLElement | number, options?: { offset?: number }) => {
     const lenis = lenisRef.current;
@@ -60,7 +66,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const value = useMemo(() => ({ scrollTo, progress }), [scrollTo, progress]);
+  const value = useMemo(() => ({ scrollTo, progress, getScrollY }), [scrollTo, progress, getScrollY]);
 
   return <LenisContext.Provider value={value}>{children}</LenisContext.Provider>;
 }
